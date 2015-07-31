@@ -16,7 +16,7 @@ def card_set_url(set, page=0):
     return "http://gatherer.wizards.com/Pages/Search/Default.aspx?page=#{page}&set=[#{uri.escape(round_dquote(set))}]"
 end
 
-def card_detail_url(name, id):
-    return "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=#{id}&part=#{uri.escape(name)}"
+def card_detail_url(name, id, printed=True):
+    return "http://gatherer.wizards.com/Pages/Card/Details.aspx?printed=#{printed}&multiverseid=#{id}&part=#{uri.escape(name)}"
 end
 
