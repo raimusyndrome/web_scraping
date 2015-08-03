@@ -1,14 +1,14 @@
 
-def get_page_list(doc):
+def get_page_list(doc)
     # 検索結果の全ページのURLリストを取得する
     page_url = []
-    doc.css(".paging a").each do |page|
+    doc.css(".paging > a").each do |page|
         page_url.push(page["href"])
     end
     return page_url
 end
 
-def get_detail_url_list(doc):
+def get_detail_url_list(doc)
     # 検索結果ページのカード詳細URLのリストを取得する
     url_list = []
     doc.search(".cardItem").each do |item|
@@ -18,7 +18,7 @@ def get_detail_url_list(doc):
     return url_list
 end
 
-def parse_card(oracle_doc, print_doc):
+def parse_card(oracle_doc, print_doc)
     # カードのデータを解析する
     id_prefix = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
     ja_name = print_doc.css("##{id_prefix}_nameRow").at_css(".value").text
@@ -40,7 +40,7 @@ def parse_card(oracle_doc, print_doc):
     # TODO 融合カードを取得可能に
 end
 
-def alternative_img(html_text):
+def alternative_img(html_text)
     # imgタグを対応するテキストに変換する
 end
 
