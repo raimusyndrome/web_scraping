@@ -45,3 +45,28 @@ def alternative_img(html_text)
     # imgタグを対応するテキストに変換する
 end
 
+def get_power_tough(pt_value)
+    # パワー、タフネス値を取得する
+    return pt_value.split("/")
+end
+
+def get_card_type(type_text)
+    # カードタイプを取得
+    # 印刷面
+    element = type_text.split("ー")
+    type_ele = element[0].split("の")
+    return type_ele[-1]
+    # オラクル面
+end
+
+def get_sub_type(type_text)
+    # サブタイプを取得
+    # 印刷面
+    element = type_text.split("ー")
+    if element.length < 2 then
+        raise ValueError
+    sub_ele = element[1].split("・")
+    return sub_ele
+    # オラクル面
+end
+
