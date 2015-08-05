@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 def get_page_list(doc)
     # 検索結果の全ページのURLリストを取得する
@@ -47,14 +48,19 @@ end
 
 def get_power_tough(pt_value)
     # パワー、タフネス値を取得する
-    return pt_value.split("/")
+    # return pt_value.split("/")
+    # return pt_value.split(/[ \/]/).map(&:to_i)
+    pt_ele = pt_value.split(/[ \/]/)
+    return pt_ele[0].to_i, pt_ele[-1].to_i
 end
 
 def get_card_type(type_text)
     # カードタイプを取得
     # 印刷面
-    element = type_text.split("ー")
+    # element = type_text.split(/[−- ]/)
+    element = type_text.split(" ")
     type_ele = element[0].split("の")
+    # TODO チェックを入れるかも
     return type_ele[-1]
     # オラクル面
 end
@@ -62,11 +68,17 @@ end
 def get_sub_type(type_text)
     # サブタイプを取得
     # 印刷面
-    element = type_text.split("ー")
+    element = type_text.split(" ")
     if element.length < 2 then
-        raise ValueError
-    sub_ele = element[1].split("・")
+        # サブタイプを持たない場合
+        return None
+    end
+    sub_ele = element[-1].split("・")
     return sub_ele
     # オラクル面
+end
+
+def is_legendary(type_text)
+    return type_text.include?("伝説の")
 end
 
