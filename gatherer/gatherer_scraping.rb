@@ -27,13 +27,16 @@ def parse_card(oracle_doc, print_doc)
     # TODO imgタグからテキスト表記へ
     mana_cost = print_doc.css("##{id_prefix}_manaRow").at_css(".value").text
     cmc = print_doc.css("##{id_prefix}_cmcRow").at_css(".value").text
-    # TODO カードタイプとサブタイプを分ける
-    card_type = print_doc.css("##{id_prefix}_typeRow").at_css(".value").text
+    # カードタイプとサブタイプを分ける
+    type_text = print_doc.css("##{id_prefix}_typeRow").at_css(".value").text
+    card_type = get_card_type(type_text)
+    sub_type = get_sub_type(type_text)
     # TODO imgタグをテキスト表記へ
     ja_text = print_doc.css("##{id_prefix}_textRow").at_css(".cardtextbox").text
     ja_flavor = print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox").text
-    # TODO パワータフネスを分解
+    # パワータフネスを分解
     pt_value = print_doc.css("##{id_prefix}_ptRow").at_css(".value").text
+    power, toughness = get_power_tough(pt_value)
     # TODO imgタグをテキスト表記へ
     expansion = print_doc.css("##{id_prefix}_setRow").at_css(".value").text
     rarity = print_doc.css("##{id_prefix}_rarityRow").at_css(".value").text
@@ -48,8 +51,6 @@ end
 
 def get_power_tough(pt_value)
     # パワー、タフネス値を取得する
-    # return pt_value.split("/")
-    # return pt_value.split(/[ \/]/).map(&:to_i)
     pt_ele = pt_value.split(/[ \/]/)
     return pt_ele[0].to_i, pt_ele[-1].to_i
 end
@@ -57,7 +58,6 @@ end
 def get_card_type(type_text)
     # カードタイプを取得
     # 印刷面
-    # element = type_text.split(/[−- ]/)
     element = type_text.split(" ")
     type_ele = element[0].split("の")
     # TODO チェックを入れるかも
@@ -79,6 +79,8 @@ def get_sub_type(type_text)
 end
 
 def is_legendary(type_text)
+    # 印刷面
     return type_text.include?("伝説の")
+    # オラクル面
 end
 
