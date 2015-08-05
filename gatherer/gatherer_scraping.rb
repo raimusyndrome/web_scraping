@@ -5,7 +5,8 @@ def get_page_list(doc)
     doc.css(".paging > a").each do |page|
         page_url.push(page["href"])
     end
-    return page_url
+    # 末尾は次のページなので、除外する
+    return page_url[0..-2]
 end
 
 def get_detail_url_list(doc)
