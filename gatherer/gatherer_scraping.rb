@@ -34,13 +34,13 @@ def parse_card(oracle_doc, print_doc)
     # TODO imgタグをテキスト表記へ
     ja_text = print_doc.css("##{id_prefix}_textRow").at_css(".cardtextbox").text
     ja_flavor = print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox").text
+    # TODO カードタイプによって処理を分岐
     # パワータフネスを分解
     pt_value = print_doc.css("##{id_prefix}_ptRow").at_css(".value").text
     power, toughness = get_power_tough(pt_value)
     # TODO imgタグをテキスト表記へ
     expansion = print_doc.css("##{id_prefix}_setRow").at_css(".value").text
     rarity = print_doc.css("##{id_prefix}_rarityRow").at_css(".value").text
-    # TODO 忠誠度を取得可能に
     # TODO 両面カードを取得可能に
     # TODO 融合カードを取得可能に
 end
@@ -54,6 +54,12 @@ def get_power_tough(pt_value)
     pt_ele = pt_value.split(/[ \/]/)
     return pt_ele[0].to_i, pt_ele[-1].to_i
 end
+
+def get_loyarity(loyalty)
+    # 忠誠値を取得する
+    return loyalty.to_i
+end
+
 
 def get_card_type(type_text)
     # カードタイプを取得
