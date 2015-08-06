@@ -49,6 +49,13 @@ def parse_card(oracle_doc, print_doc)
     power, toughness = get_power_tough(pt_value)
     # TODO 両面カードを取得可能に
     # TODO 融合カードを取得可能に
+    en_data = {:name => name, :expansion => expansion, :rarity => rarity}
+    ja_data = {
+        :name => ja_name, :type => ja_card_type, :sub_type => ja_sub_type, 
+        :text => ja_text, :flavor => ja_flavor,
+        :expansion => expansion, :rarity => rarity
+    }
+    return {:en => en_data, :ja => ja_data}
 end
 
 def alternative_img(html_text)

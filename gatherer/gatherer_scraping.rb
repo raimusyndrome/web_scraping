@@ -17,7 +17,8 @@ def get_flavour_file(set_name)
         oracle_doc = get_html_doc(detail_url)
         print_doc = get_html_doc(detail_url)
         card_data = parse_card(oracle_doc, print_doc)
-        flavor_list.push(card_data)
+        output_data = [card_data[:en][:name], card_data[:ja][:name] card_data[:ja][:flavor]]
+        flavor_list.push(output_data)
     end
     CSV.open("#{set_name}_flavor.csv", "wb") do |file|
         file << flavor_list
