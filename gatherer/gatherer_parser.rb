@@ -22,12 +22,10 @@ end
 
 def parse_card(oracle_doc, print_doc)
     # カードのデータを解析する
+    ## カード共通
     id_prefix = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
     name = oracle_doc.css("##{id_prefix}_nameRow").at_css(".value").text
     ja_name = print_doc.css("##{id_prefix}_nameRow").at_css(".value").text
-    # TODO imgタグからテキスト表記へ
-    mana_cost = oracle_doc.css("##{id_prefix}_manaRow").at_css(".value").text
-    cmc = oracle_doc.css("##{id_prefix}_cmcRow").at_css(".value").text
     # カードタイプとサブタイプを分ける
     ja_type_text = print_doc.css("##{id_prefix}_typeRow").at_css(".value").text
     ja_card_type = get_card_type(ja_type_text)
@@ -35,13 +33,20 @@ def parse_card(oracle_doc, print_doc)
     # TODO imgタグをテキスト表記へ
     ja_text = print_doc.css("##{id_prefix}_textRow").at_css(".cardtextbox").text
     ja_flavor = print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox").text
+    # TODO imgタグをテキスト表記へ
+    expansion = oracle_doc.css("##{id_prefix}_setRow").at_css(".value").text
+    rarity = oracle_doc.css("##{id_prefix}_rarityRow").at_css(".value").text
+
+    ## 呪文共通
+    # TODO imgタグからテキスト表記へ
+    mana_cost = oracle_doc.css("##{id_prefix}_manaRow").at_css(".value").text
+    cmc = oracle_doc.css("##{id_prefix}_cmcRow").at_css(".value").text
+
+    ## タイプ別
     # TODO カードタイプによって処理を分岐
     # パワータフネスを分解
     pt_value = oracle_doc.css("##{id_prefix}_ptRow").at_css(".value").text
     power, toughness = get_power_tough(pt_value)
-    # TODO imgタグをテキスト表記へ
-    expansion = oracle_doc.css("##{id_prefix}_setRow").at_css(".value").text
-    rarity = oracle_doc.css("##{id_prefix}_rarityRow").at_css(".value").text
     # TODO 両面カードを取得可能に
     # TODO 融合カードを取得可能に
 end
