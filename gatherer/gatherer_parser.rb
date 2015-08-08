@@ -15,6 +15,7 @@ def get_detail_url_list(doc)
     url_list = []
     doc.search(".cardItem").each do |item|
         detail_url = item.at_css("a")["href"]
+        detail_url = detail_url.split("/")[1..detail_url.length].join("/")
         url_list.push(detail_url)
     end
     return url_list
