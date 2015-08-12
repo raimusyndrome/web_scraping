@@ -30,7 +30,7 @@ module ColNo
 
     EN_NAME = 23
     EN_TEXT = 25
-    EN_TEXT = 27
+    EN_FLAVOR = 27
 
     CARDNO = 30
     CARDSET = 40
@@ -39,13 +39,14 @@ module ColNo
     PRINTNUM = 44
 end
 
-def get_csv_data(doc):
-    return doc.at_css(".solid1 > td")
+def get_csv_data(doc)
+    return doc.css(".solid1 > td").text
 end
 
-def parse_flavor(csv_str):
+def parse_flavor(csv_str)
     card_list = []
     CSV.parse(csv_str) do |row|
+        # print(row)
         card = {
             :ja_name => row[ColNo::NAME],
             :en_name => row[ColNo::EN_NAME],
@@ -56,11 +57,29 @@ def parse_flavor(csv_str):
     return card_list
 end
 
-def output_csv(out_file, flavor):
+def output_csv(out_file, flavor)
     CSV.open(out_file, "wb") do |csv|
         flavor.each do |item|
             csv << [item[:ja_name], item[:en_name], item[:flavor]]
         end
     end
+end
+
+def gen_flavor_list(input_file, output_file)
+    doc = read_html_doc(input_file)
+    # print(doc.title)
+    csv_str = get_csv_data(doc)
+    # print(csv_str)
+    card_list = parse_flavor(csv_str)
+    output_csv(output_file, card_list)
+end
+
+
+if __FILE__ == $0
+    in_file = $1
+    out_file = $2
+    in_file = "page_data/MTG_ORI_CardSearchDatabase.html"
+    out_file = "MTG_ORI_flavor_list.csv"
+    gen_flavor_list(in_file, out_file)
 end
 
