@@ -2,11 +2,13 @@
 
 require "test/unit"
 
-require "../gatherer_scraping"
-require "../../utils/nokogiri_utils"
+require "./gatherer_parser"
+require "./gatherer_scraping"
+require "./../utils/nokogiri_utils"
 
-CARD_LIST_PATH = "page_data/Card\ Search\ -\ Search:\ \"Dragons\ of\ Tarkir\"\ -\ Gatherer\ -\ Magic:\ The\ Gathering.html"
-CARD_DETAIL_PATH = "page_data/族樹の精霊、アナフェンザ\ (Dragons\ of\ Tarkir)\ -\ Gatherer\ -\ Magic:\ The\ Gathering.html"
+base_dir = "./test/"
+CARD_LIST_PATH = base_dir + "page_data/CardSearch.html"
+CARD_DETAIL_PATH = base_dir + "page_data/legendary_multi_sub_type_flavored_creature.html"
 
 class TestGatherer < Test::Unit::TestCase
     def sample_template
