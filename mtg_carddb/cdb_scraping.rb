@@ -43,10 +43,14 @@ def get_csv_data(doc)
     return doc.css(".solid1 > td").text
 end
 
-def parse_flavor(csv_str)
+def parse_flavor(csv_str, set_code)
     card_list = []
     CSV.parse(csv_str) do |row|
         # print(row)
+        if row[ColNo::CARDSET] != set_code
+            # print(row)
+            next
+        end
         card = {
             :ja_name => row[ColNo::NAME],
             :en_name => row[ColNo::EN_NAME],
@@ -65,12 +69,15 @@ def output_csv(out_file, flavor)
     end
 end
 
-def gen_flavor_list(input_file, output_file)
+def gen_flavor_list(input_file, output_file, set_code)
     doc = read_html_doc(input_file)
     # print(doc.title)
     csv_str = get_csv_data(doc)
     # print(csv_str)
-    card_list = parse_flavor(csv_str)
+    # open("csv_str.tmp", "wb") do |f|
+        # f << csv_str
+    # end
+    card_list = parse_flavor(csv_str, set_code)
     output_csv(output_file, card_list)
 end
 
@@ -78,8 +85,10 @@ end
 if __FILE__ == $0
     in_file = $1
     out_file = $2
-    in_file = "page_data/MTG_ORI_CardSearchDatabase.html"
-    out_file = "MTG_ORI_flavor_list.csv"
-    gen_flavor_list(in_file, out_file)
+    set_code = "DTK"
+    # set_code = "ORI"
+    in_file = "page_data/MTG_#{set_code}_CardSearchDatabase.html"
+    out_file = "flavor/MTG_#{set_code}_flavor_list.csv"
+    gen_flavor_list(in_file, out_file, set_code)
 end
 
