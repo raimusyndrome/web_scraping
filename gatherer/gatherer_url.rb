@@ -2,10 +2,12 @@
 require "uri"
 
 def is_round_dquote(str)
+    # ダブルクォートで囲まれているかを判定する。
     return str.length >= 2 && str[0] == '"' && str[-1] =='"'
 end
 
 def round_dquote(str)
+    # ダブルクォートで囲む。
     strip = str.strip()
     if not is_round_dquote(strip) then
         strip = '"' + strip + '"'
@@ -26,5 +28,9 @@ end
 
 def get_gatherer_page_url(page)
     return GATHERER_DOMOIN + page
+end
+
+def printed_url(url)
+    return url + "&printed=True"
 end
 

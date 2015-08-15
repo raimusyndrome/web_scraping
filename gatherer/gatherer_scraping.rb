@@ -13,7 +13,7 @@ def get_flavor_file(set_name)
     for card_path in card_list
         detail_url = get_gatherer_page_url(card_path)
         oracle_doc = get_html_doc(detail_url)
-        print_doc = get_html_doc(detail_url)
+        print_doc = get_html_doc(printed_url(detail_url))
         card_data = parse_card(oracle_doc, print_doc)
         output_data = [card_data[:en][:name], card_data[:ja][:name], card_data[:ja][:flavor]]
         flavor_list.push(output_data)
