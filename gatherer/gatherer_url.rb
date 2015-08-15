@@ -15,7 +15,7 @@ def round_dquote(str)
     return strip
 end
 
-GATHERER_DOMOIN = "http://gatherer.wizards.com"
+GATHERER_DOMOIN = "http://gatherer.wizards.com/"
 
 def card_set_url(set, page=0)
     # return "http://gatherer.wizards.com/Pages/Search/Default.aspx?page=#{page}&set=[#{round_dquote(URI.escape(set))}]"
@@ -27,10 +27,10 @@ def card_detail_url(name, id, printed=True)
 end
 
 def get_gatherer_page_url(page)
-    return GATHERER_DOMOIN + page
+    return File.join(GATHERER_DOMOIN, "Pages", page)
 end
 
 def printed_url(url)
-    return url + "&printed=True"
+    return url.strip + "&printed=true"
 end
 

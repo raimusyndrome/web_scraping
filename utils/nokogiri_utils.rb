@@ -38,8 +38,13 @@ def write_html_doc(file_name, doc)
     end
 end
 
-def downlaod_html(url)
+def download_html(url, out_dir=".", file_name=nil)
     doc = get_html_doc(url)
-    write_html_doc('web_page_'+url.gsub(/\//, '_')+'.html', doc)
+    if file_name
+        out_path = File.join(out_dir, file_name)
+    else
+        out_path = File.join(out_dir, 'web_page_'+url.gsub(/\//, '_')+'.html')
+    end
+    write_html_doc(out_path, doc)
 end
 
