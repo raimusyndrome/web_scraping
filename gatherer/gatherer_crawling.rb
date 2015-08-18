@@ -39,46 +39,6 @@ def crawl_set_page(set_name)
     end
 end
 
-def get_card_url_list(set_name, out_dir=".", save=false)
-    # 指定したカードセットのURLリストを取得する。
-    page_list_file = "card_page_list_#{set_name}.txt"
-    save_path = File.join(out_dir, page_list_file)
-    if File.exist?(save_path)
-        card_list = []
-        open(save_path, "r") do |f|
-            f.each do |line|
-                card_list.push(line)
-            end
-        end
-    else
-        card_list = download_card_page_list(set_name, set_dir, save)
-    end
-    return card_list
-end
-
-def download_card_page_list(set_name, out_dir, save)
-    search_url = card_set_url(set_name)
-    # print(search_url)
-    search_doc = get_html_doc(search_url)
-    page_list = get_page_list(search_doc)
-    card_list = []
-    for page in page_list
-        page_url = get_gatherer_page_url(page)
-        page_doc = get_html_doc(page_url)
-        card_sub_list = get_detail_url_list(page_doc)
-        card_list.concat(card_sub_list)
-    end
-    page_list_file = "card_page_list_#{set_name}.txt"
-    if save
-        output_file = File.join(out_dir, page_list_file)
-        open(output_file, "w") do |f|
-            # f.puts card_list.to_s
-            f.puts *card_list
-        end
-    end
-    return card_list
-end
-
 if __FILE__ == $0
     target_set = $1
     target_set = "Dragons of Tarkir"

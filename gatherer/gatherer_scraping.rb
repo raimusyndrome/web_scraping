@@ -5,11 +5,17 @@ require "./gatherer_parser"
 require "./gatherer_url"
 require "../utils/nokogiri_utils"
 
+DEBUG=true
+
 def get_flavor_file(set_name)
     # フレーバーテキスト一覧を取得する。
-    card_list = get_card_url_list(set_name)
+    card_list = get_card_url_list(set_name, out_dir="result/#{set_name}")
     rng = Random.new
     flavor_list = []
+    if DEBUG 
+        card_list = card_list[0..10]
+    end
+    print(card_list, "\n")
     for card_path in card_list
         detail_url = get_gatherer_page_url(card_path)
         oracle_doc = get_html_doc(detail_url)
@@ -19,30 +25,21 @@ def get_flavor_file(set_name)
         flavor_list.push(output_data)
         sleep 1+rng.rand
     end
-    CSV.open("#{set_name}_flavor.csv", "wb") do |file|
+    output_dir = "flavor"
+    set_dir = File.join(output_dir, set_name.gsub("\s", ""))
+    if !Dir.exist?(set_dir)
+        Dir.mkdir(set_dir)
+    end
+    output_file = File.join(set_dir,"#{set_name}_flavor.csv")
+    CSV.open(output_file, "w") do |file|
         file << flavor_list
     end
-end
-
-def get_card_url_list(set_name)
-    # 指定したカードセットのURLリストを取得する。
-    search_url = card_set_url(set_name)
-    # print(search_url)
-    search_doc = get_html_doc(search_url)
-    page_list = get_page_list(search_doc)
-    card_list = []
-    for page in page_list
-        page_url = get_gatherer_page_url(page)
-        page_doc = get_html_doc(page_url)
-        card_sub_list = get_detail_url_list(page_doc)
-        card_list.concat(card_sub_list)
-    end
-    return card_list
 end
 
 if __FILE__ == $0
     target_set = $1
     target_set = "Dragons of Tarkir"
     get_flavor_file(target_set)
+    puts("Done")
 end
 
