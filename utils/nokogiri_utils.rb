@@ -3,13 +3,18 @@ require 'open-uri'
 # Nokogiriライブラリの読み込み
 require 'nokogiri'
 
-def open_url_html(url, cookie_hash=nil)
-    charset = nil
+def cookie_header(cookie_hash)
     if cookie_hash
         cookie = cookie_hash.map{|x| x.join('=')}.join('; ')
     else
         cookie = ''
     end
+    return cookie
+end
+
+def open_url_html(url, cookie_hash=nil)
+    charset = nil
+    cookie = cookie_header(cookie_hash)
     html = open(url, {'Cookie' => cookie}) do |f|
         charset = f.charset # 文字種別を取得
         f.read # htmlを読み込んで変数htmlに渡す
