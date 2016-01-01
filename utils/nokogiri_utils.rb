@@ -3,17 +3,22 @@ require 'open-uri'
 # Nokogiriライブラリの読み込み
 require 'nokogiri'
 
-def open_url_html(url)
+def open_url_html(url, cookie_hash=nil)
     charset = nil
-    html = open(url) do |f|
+    if cookie_hash
+        cookie = cookie_hash.map{|x| x.join('=')}.join('; ')
+    else
+        cookie = ''
+    end
+    html = open(url, {'Cookie' => cookie}) do |f|
         charset = f.charset # 文字種別を取得
         f.read # htmlを読み込んで変数htmlに渡す
     end
     return html, charset
 end
 
-def get_html_doc(url)
-    html, charset = open_url_html(url)
+def get_html_doc(url, cookie=nil)
+    html, charset = open_url_html(url, cookie)
     # htmlをパース(解析)してオブジェクトを生成
     doc = Nokogiri::HTML.parse(html, nil, charset)
     return doc
