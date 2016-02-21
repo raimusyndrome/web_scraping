@@ -37,8 +37,10 @@ def open_file_html(file_name)
 end
 
 def read_html_doc(file_name)
-    html = open_file_html(file_name)
+    # html = open_file_html(file_name)
+    html = File.open(file_name, 'r')
     doc = Nokogiri::HTML(html)
+    html.close
     return doc
 end
 
@@ -48,8 +50,8 @@ def write_html_doc(file_name, doc)
     end
 end
 
-def download_html(url, out_dir=".", file_name=nil)
-    doc = get_html_doc(url)
+def download_html(url, out_dir=".", file_name=nil, cookie=nil)
+    doc = get_html_doc(url, cookie)
     if file_name
         out_path = File.join(out_dir, file_name)
     else

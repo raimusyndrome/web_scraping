@@ -71,7 +71,7 @@ end
 
 def gen_flavor_list(input_file, output_file, set_code)
     doc = read_html_doc(input_file)
-    # print(doc.title)
+    print(doc.title)
     csv_str = get_csv_data(doc)
     # print(csv_str)
     # open("csv_str.tmp", "wb") do |f|
@@ -83,12 +83,16 @@ end
 
 
 if __FILE__ == $0
-    in_file = $1
-    out_file = $2
-    set_code = "DTK"
+    set_code = $1
+    # in_file = $1
+    # out_file = $2
+     
+    # set_code = "DTK"
     # set_code = "ORI"
+    set_code = "BFZ"
     in_file = "page_data/MTG_#{set_code}_CardSearchDatabase.html"
     out_file = "flavor/MTG_#{set_code}_flavor_list.csv"
+    # out_file = "flavor/MTG_#{set_code}_flavor_test.csv"
     gen_flavor_list(in_file, out_file, set_code)
 end
 
