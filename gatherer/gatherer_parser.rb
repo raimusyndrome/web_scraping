@@ -39,14 +39,19 @@ def get_card_url_list(set_name, out_dir=".", save=false)
 end
 
 def download_card_page_list(set_name, out_dir, save)
+    # カードのURLリストをダウンロードする。
     search_url = card_set_url(set_name)
     # print(search_url)
-    search_doc = get_html_doc(search_url)
+    cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
+    search_doc = get_html_doc(search_url, cookie=cookie)
+    # write_html_doc(File.join(out_dir, "search.html"), search_doc)
     page_list = get_page_list(search_doc)
+    # print(page_list)
     card_list = []
     for page in page_list
-        page_url = get_gatherer_page_url(page)
-        page_doc = get_html_doc(page_url)
+        page_url = get_gatherer_domain_url(page)
+        # print(page_url)
+        page_doc = get_html_doc(page_url, cookie=cookie)
         card_sub_list = get_detail_url_list(page_doc)
         card_list.concat(card_sub_list)
     end

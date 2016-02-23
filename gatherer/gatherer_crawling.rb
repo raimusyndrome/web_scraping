@@ -20,18 +20,16 @@ def crawl_set_page(set_name)
     if DEBUG 
         card_list = card_list[0..1]
     end
+    cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
     for card_path in card_list
         if /multiverseid=(\d+)/ =~ card_path
             multiverseid = $1
             oracle_file = "card_#{multiverseid}_oracle.html"
             print_file = "card_#{multiverseid}_print.html"
             detail_url = get_gatherer_page_url(card_path)
-            # oracle_doc = get_html_doc(detail_url)
-            # print_doc = get_html_doc(printed_url(detail_url))
-            # write_html_doc("", oracle_doc)
-            # write_html_doc("", print_doc)
-            download_html(detail_url, out_dir=set_dir, file_name=oracle_file)
-            download_html(printed_url(detail_url), out_dir=set_dir, file_name=print_file)
+            # print(detail_url)
+            download_html(detail_url, out_dir=set_dir, file_name=oracle_file, cookie=cookie)
+            download_html(printed_url(detail_url), out_dir=set_dir, file_name=print_file, cookie=cookie)
             sleep 1+rng.rand
         else
             puts "unexpected URL: #{card_path}"

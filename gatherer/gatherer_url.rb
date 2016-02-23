@@ -26,6 +26,10 @@ def card_detail_url(name, id, printed=True)
     return "http://gatherer.wizards.com/Pages/Card/Details.aspx?printed=#{printed}&multiverseid=#{id}&part=#{URI.escape(name)}"
 end
 
+def get_gatherer_domain_url(page)
+    return File.join(GATHERER_DOMOIN, page)
+end
+
 def get_gatherer_page_url(page)
     return File.join(GATHERER_DOMOIN, "Pages", page)
 end
