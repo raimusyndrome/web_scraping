@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 require "csv"
-require "./gatherer_parser"
+require "./gatherer_page_parser"
+require "./gatherer_card_parser"
 require "./gatherer_url"
 require "../utils/nokogiri_utils"
 
@@ -9,7 +10,8 @@ DEBUG=true
 
 def get_flavor_file(set_name)
     # フレーバーテキスト一覧を取得する。
-    card_list = get_card_url_list(set_name, out_dir="result/#{set_name}")
+    set_file = set_name.gsub("\s", "_")
+    card_list = get_card_url_list(set_name, out_dir="result/#{set_file}")
     rng = Random.new
     flavor_list = []
     if DEBUG 
@@ -27,11 +29,11 @@ def get_flavor_file(set_name)
         sleep 1+rng.rand
     end
     output_dir = "flavor"
-    set_dir = File.join(output_dir, set_name.gsub("\s", ""))
+    set_dir = File.join(output_dir, set_file)
     if !Dir.exist?(set_dir)
         Dir.mkdir(set_dir)
     end
-    output_file = File.join(set_dir,"#{set_name}_flavor.csv")
+    output_file = File.join(set_dir,"#{set_file}_flavor.csv")
     CSV.open(output_file, "w") do |file|
         file << flavor_list
     end
