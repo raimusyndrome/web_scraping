@@ -2,6 +2,7 @@
 
 def get_page_list(doc)
     # 検索結果の全ページのURLリストを取得する
+
     page_url = []
     doc.css(".paging > a").each do |page|
         page_url.push(page["href"])
@@ -12,6 +13,7 @@ end
 
 def get_detail_url_list(doc)
     # 検索結果ページのカード詳細URLのリストを取得する
+
     url_list = []
     doc.search(".cardItem").each do |item|
         detail_url = item.at_css("a")["href"]
@@ -23,9 +25,12 @@ end
 
 def get_card_url_list(set_name, out_dir=".", save=false)
     # 指定したカードセットのURLリストを取得する。
-    page_list_file = "card_page_list_#{set_name}.txt"
+
+    set_file = set_name.gsub("\s", "_")
+    page_list_file = "card_page_list_#{set_file}.txt"
     save_path = File.join(out_dir, page_list_file)
     if File.exist?(save_path)
+        # 保存ファイルがあればそれを読み込む
         card_list = []
         open(save_path, "r") do |f|
             f.each do |line|
@@ -33,6 +38,7 @@ def get_card_url_list(set_name, out_dir=".", save=false)
             end
         end
     else
+        # ファイルがなければダウンロード
         card_list = download_card_page_list(set_name, out_dir, save)
     end
     return card_list
@@ -40,6 +46,7 @@ end
 
 def download_card_page_list(set_name, out_dir, save)
     # カードのURLリストをダウンロードする。
+
     search_url = card_set_url(set_name)
     # print(search_url)
     cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
@@ -58,6 +65,7 @@ def download_card_page_list(set_name, out_dir, save)
     set_file = set_name.gsub("\s", "_")
     page_list_file = "card_page_list_#{set_file}.txt"
     if save
+        # 保存フラグ時はファイル出力
         output_file = File.join(out_dir, page_list_file)
         open(output_file, "w") do |f|
             # f.puts card_list.to_s
