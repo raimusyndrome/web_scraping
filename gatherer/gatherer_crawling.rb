@@ -7,7 +7,7 @@ require "./gatherer_card_parser"
 require "./gatherer_url"
 require "../utils/nokogiri_utils"
 
-DEBUG=true
+DEBUG=false
 
 def crawl_set_page(set_name)
     # 指定したカードセットのページをファイルに取得する。

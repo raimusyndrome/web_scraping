@@ -75,3 +75,33 @@ def download_card_page_list(set_name, out_dir, save)
     return card_list
 end
 
+def get_detail_card_page(url, out_dir, save)
+    if /multiverseid=(\d+)/ =~ url
+        cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
+        multiverseid = $1
+        oracle_file = "card_#{multiverseid}_oracle.html"
+        oracle_dir = File.join(out_dir, 'oracle')
+        oracle_path = File.join(oracle_dir, oracle_file)
+        if File.exist?(oracle_path)
+            oracle_doc = read_html_doc(oracle_path)
+        else if save
+            oracle_doc = download_html(url, out_dir=oracle_dir, file_name=oracle_file, cookie=cookie)
+        else
+            oracle_doc = get_html_doc(url, cookie=cookie)
+        end
+        print_file = "card_#{multiverseid}_print.html"
+        print_dir = File.join(out_dir, 'print')
+        print_path = File.join(print_dir, print_file)
+        if File.exist?(print_path)
+            print_doc = read_html_doc(print_path)
+        else if save
+            print_doc = download_html(url, out_dir=print_dir, file_name=print_file, cookie=cookie)
+        else
+            print_doc = get_html_doc(url, cookie=cookie)
+        end
+        return {"oracle" => oracle_doc, "print" => print_doc}
+    else
+        puts "unexpected URL: #{url}"
+    end
+end
+

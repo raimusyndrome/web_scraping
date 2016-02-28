@@ -58,5 +58,6 @@ def download_html(url, out_dir=".", file_name=nil, cookie=nil)
         out_path = File.join(out_dir, 'web_page_'+url.gsub(/\//, '_')+'.html')
     end
     write_html_doc(out_path, doc)
+    return doc
 end
 
