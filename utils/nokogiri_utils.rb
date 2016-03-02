@@ -38,10 +38,13 @@ end
 
 def read_html_doc(file_name)
     # html = open_file_html(file_name)
-    html = File.open(file_name, 'r')
-    doc = Nokogiri::HTML(html)
-    html.close
-    return doc
+    html = File.open(file_name, 'r') do |f|
+        Nokogiri::HTML(f)
+    end
+    return html
+    # doc = Nokogiri::HTML.parse(html, nil, "UTF-8")
+    # html.close
+    # return doc
 end
 
 def write_html_doc(file_name, doc)

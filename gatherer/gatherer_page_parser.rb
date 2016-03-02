@@ -81,25 +81,32 @@ def get_detail_card_page(url, out_dir, save)
         multiverseid = $1
         oracle_file = "card_#{multiverseid}_oracle.html"
         oracle_dir = File.join(out_dir, 'oracle')
+        if !Dir.exist?(oracle_dir)
+            Dir.mkdir(oracle_dir)
+        end
         oracle_path = File.join(oracle_dir, oracle_file)
+        # print(oracle_path, "\n")
         if File.exist?(oracle_path)
             oracle_doc = read_html_doc(oracle_path)
-        else if save
-            oracle_doc = download_html(url, out_dir=oracle_dir, file_name=oracle_file, cookie=cookie)
-        else
-            oracle_doc = get_html_doc(url, cookie=cookie)
+        # elsif save
+            # oracle_doc = download_html(url, out_dir=oracle_dir, file_name=oracle_file, cookie=cookie)
+        # else
+            # oracle_doc = get_html_doc(url, cookie=cookie)
         end
         print_file = "card_#{multiverseid}_print.html"
         print_dir = File.join(out_dir, 'print')
+        if !Dir.exist?(print_dir)
+            Dir.mkdir(print_dir)
+        end
         print_path = File.join(print_dir, print_file)
         if File.exist?(print_path)
             print_doc = read_html_doc(print_path)
-        else if save
-            print_doc = download_html(url, out_dir=print_dir, file_name=print_file, cookie=cookie)
-        else
-            print_doc = get_html_doc(url, cookie=cookie)
+        # elsif save
+            # print_doc = download_html(printed_url(url), out_dir=print_dir, file_name=print_file, cookie=cookie)
+        # else
+            # print_doc = get_html_doc(printed_url(url), cookie=cookie)
         end
-        return {"oracle" => oracle_doc, "print" => print_doc}
+        return {:oracle => oracle_doc, :print => print_doc}
     else
         puts "unexpected URL: #{url}"
     end

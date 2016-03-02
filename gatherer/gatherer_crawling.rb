@@ -24,6 +24,12 @@ def crawl_set_page(set_name)
     cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
     oracle_dir = File.join(set_dir, 'oracle')
     print_dir = File.join(set_dir, 'print')
+    if !Dir.exist?(oracle_dir)
+        Dir.mkdir(oracle_dir)
+    end
+    if !Dir.exist?(print_dir)
+        Dir.mkdir(print_dir)
+    end
     for card_path in card_list
         if /multiverseid=(\d+)/ =~ card_path
             multiverseid = $1
