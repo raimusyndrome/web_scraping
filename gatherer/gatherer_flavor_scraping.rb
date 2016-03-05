@@ -51,7 +51,8 @@ end
 
 if __FILE__ == $0
     target_set = $1
-    target_set = "Dragons of Tarkir"
+    # target_set = "Dragons of Tarkir"
+    target_set = "Magic Origins"
     get_flavor_file(target_set)
     puts("Done")
 end

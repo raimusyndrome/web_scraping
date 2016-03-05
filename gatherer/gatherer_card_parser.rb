@@ -13,6 +13,7 @@ def parse_card(oracle_doc, print_doc)
     # TODO imgタグをテキスト表記へ
     ja_text = get_text(print_doc.css("##{id_prefix}_textRow").at_css(".cardtextbox"))
     ja_flavor = get_text(print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox"))
+    ja_flavor_html = get_html(print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox"))
     # TODO imgタグをテキスト表記へ
     expansion = get_text(oracle_doc.css("##{id_prefix}_setRow").at_css(".value"))
     rarity = get_text(oracle_doc.css("##{id_prefix}_rarityRow").at_css(".value"))
@@ -31,7 +32,7 @@ def parse_card(oracle_doc, print_doc)
     en_data = {:name => name, :expansion => expansion, :rarity => rarity}
     ja_data = {
         :name => ja_name, :type => ja_card_type, :sub_type => ja_sub_type, 
-        :text => ja_text, :flavor => ja_flavor,
+        :text => ja_text, :flavor => ja_flavor, :flavor_html => ja_flavor_html,
         :expansion => expansion, :rarity => rarity
     }
     return {:en => en_data, :ja => ja_data}
@@ -43,9 +44,16 @@ end
 
 def get_text(div)
     if div
-        # print(div.text.class, "\n")
         # print(div.text.strip, "\n")
         return div.text.strip
+    else
+        return ""
+    end
+end
+
+def get_html(div)
+    if div
+        return div.inner_html.strip
     else
         return ""
     end
