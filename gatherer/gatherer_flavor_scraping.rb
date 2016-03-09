@@ -28,7 +28,7 @@ def get_flavor_file(set_name)
         # card_data = parse_card(oracle_doc, print_doc)
         doc = get_detail_card_page(detail_url, out_dir=set_dir, save=false)
         card_data = parse_card(doc[:oracle], doc[:print])
-        output_data = [card_data[:en][:name], card_data[:ja][:name], card_data[:ja][:flavor]]
+        output_data = [card_data[:ja][:name], card_data[:en][:name], card_data[:ja][:flavor]]
         flavor_list.push(output_data)
         # print(card_data[:ja][:name], "\n")
         # print(card_data, "\n")
@@ -36,7 +36,7 @@ def get_flavor_file(set_name)
         # sleep 1+rng.rand
     end
     output_dir = "flavor"
-    result_dir = File.join(output_dir, set_file)
+    result_dir = output_dir
     if !Dir.exist?(result_dir)
         Dir.mkdir(result_dir)
     end
@@ -51,8 +51,8 @@ end
 
 if __FILE__ == $0
     target_set = $1
-    # target_set = "Dragons of Tarkir"
-    target_set = "Magic Origins"
+    target_set = "Dragons of Tarkir"
+    # target_set = "Magic Origins"
     get_flavor_file(target_set)
     puts("Done")
 end

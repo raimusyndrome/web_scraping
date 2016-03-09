@@ -11,8 +11,8 @@ def parse_card(oracle_doc, print_doc)
     ja_card_type = get_card_type(ja_type_text)
     ja_sub_type = get_sub_type(ja_type_text)
     # TODO imgタグをテキスト表記へ
-    ja_text = get_text(print_doc.css("##{id_prefix}_textRow").at_css(".cardtextbox"))
-    ja_flavor = get_text(print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox"))
+    ja_text = get_long_text(print_doc.css("##{id_prefix}_textRow").css(".cardtextbox"))
+    ja_flavor = get_long_text(print_doc.css("##{id_prefix}_flavorRow").css(".flavortextbox"))
     ja_flavor_html = get_html(print_doc.css("##{id_prefix}_flavorRow").at_css(".flavortextbox"))
     # TODO imgタグをテキスト表記へ
     expansion = get_text(oracle_doc.css("##{id_prefix}_setRow").at_css(".value"))
@@ -40,6 +40,16 @@ end
 
 def alternative_img(html_text)
     # imgタグを対応するテキストに変換する
+end
+
+def get_long_text(div)
+    result = ""
+    if div
+        div.each do |node|
+            result += get_text(node)
+        end
+    end
+    return result
 end
 
 def get_text(div)
