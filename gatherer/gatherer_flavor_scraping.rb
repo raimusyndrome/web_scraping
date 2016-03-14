@@ -20,8 +20,8 @@ def get_flavor_file(set_name)
         card_list = card_list[0..10]
     end
     # print(card_list, "\n")
-    # cookie = { 'CardDatabaseSettings' => '1=ja-JP' }
     for card_path in card_list
+        print(card_path)
         detail_url = get_gatherer_page_url(card_path)
         # oracle_doc = get_html_doc(detail_url, cookie)
         # print_doc = get_html_doc(printed_url(detail_url))
@@ -51,8 +51,8 @@ end
 
 if __FILE__ == $0
     target_set = $1
-    target_set = "Dragons of Tarkir"
-    # target_set = "Magic Origins"
+    # target_set = "Dragons of Tarkir"
+    target_set = "Magic Origins"
     get_flavor_file(target_set)
     puts("Done")
 end

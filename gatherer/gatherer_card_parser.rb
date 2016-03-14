@@ -1,6 +1,14 @@
 # -*- encoding: utf-8 -*-
 
+NORMAL_PREFIX = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
+FACE_PREFIX = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_ctl02"
+BACK_PREFIX = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_ctl03"
+
 def parse_card(oracle_doc, print_doc)
+    return parse_simple_card(oracle_doc, print_doc)
+end
+
+def parse_simple_card(oracle_doc, print_doc)
     # カードのデータを解析する
     ## カード共通
     id_prefix = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
