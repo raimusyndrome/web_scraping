@@ -5,13 +5,21 @@ FACE_PREFIX = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_ctl02"
 BACK_PREFIX = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_ctl03"
 
 def parse_card(oracle_doc, print_doc)
-    return parse_simple_card(oracle_doc, print_doc)
+    if is_double_face(oracle_doc)
+        return parse_double_face_card(oracle_doc, print_doc)
+    else
+        return parse_simple_card(oracle_doc, print_doc, NORMAL_PREFIX)
+    end
 end
 
-def parse_simple_card(oracle_doc, print_doc)
+def parse_double_face_card(oracle_doc, print_doc)
+    return parse_simple_card(oracle_doc, print_doc, FACE_PREFIX)
+end
+
+def parse_simple_card(oracle_doc, print_doc, id_prefix)
     # カードのデータを解析する
     ## カード共通
-    id_prefix = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
+    # id_prefix = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent"
     name = get_text(oracle_doc.css("##{id_prefix}_nameRow").at_css(".value"))
     ja_name = get_text(print_doc.css("##{id_prefix}_nameRow").at_css(".value"))
     # カードタイプとサブタイプを分ける
@@ -121,5 +129,13 @@ def is_legendary(type_text)
     # 印刷面
     return type_text.include?("伝説の")
     # オラクル面
+end
+
+def is_double_face(doc)
+    if doc.css("##{FACE_PREFIX}_nameRow").empty?
+        return false
+    else
+        return true
+    end
 end
 

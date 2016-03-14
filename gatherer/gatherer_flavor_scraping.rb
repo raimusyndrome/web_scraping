@@ -21,7 +21,7 @@ def get_flavor_file(set_name)
     end
     # print(card_list, "\n")
     for card_path in card_list
-        print(card_path)
+        # print(card_path)
         detail_url = get_gatherer_page_url(card_path)
         # oracle_doc = get_html_doc(detail_url, cookie)
         # print_doc = get_html_doc(printed_url(detail_url))
