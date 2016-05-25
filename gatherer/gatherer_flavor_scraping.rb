@@ -4,10 +4,12 @@ require "csv"
 require "./gatherer_page_parser"
 require "./gatherer_card_parser"
 require "./gatherer_url"
+require "./card_set_name"
 require "../utils/nokogiri_utils"
 
 DEBUG=false
 
+# gatherer_crawlingが実行済みであることが前提
 
 def get_flavor_file(set_name)
     # フレーバーテキスト一覧を取得する。
@@ -51,8 +53,7 @@ end
 
 if __FILE__ == $0
     target_set = $1
-    # target_set = "Dragons of Tarkir"
-    target_set = "Magic Origins"
+    target_set = BFZ
     get_flavor_file(target_set)
     puts("Done")
 end

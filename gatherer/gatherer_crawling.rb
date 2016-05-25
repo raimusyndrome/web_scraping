@@ -5,6 +5,7 @@ require "csv"
 require "./gatherer_page_parser"
 require "./gatherer_card_parser"
 require "./gatherer_url"
+require "./card_set_name"
 require "../utils/nokogiri_utils"
 
 DEBUG=false
@@ -48,8 +49,7 @@ end
 
 if __FILE__ == $0
     target_set = $1
-    # target_set = "Dragons of Tarkir"
-    target_set = "Magic Origins"
+    target_set = BFZ
     crawl_set_page(target_set)
     puts "Done"
 end

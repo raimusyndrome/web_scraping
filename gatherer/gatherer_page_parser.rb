@@ -82,7 +82,8 @@ def get_detail_card_page(url, out_dir, save)
         oracle_file = "card_#{multiverseid}_oracle.html"
         oracle_dir = File.join(out_dir, 'oracle')
         if !Dir.exist?(oracle_dir)
-            Dir.mkdir(oracle_dir)
+            # Dir.mkdir(oracle_dir)
+            FileUtils.mkdir_p(oracle_dir)
         end
         oracle_path = File.join(oracle_dir, oracle_file)
         # print(oracle_path, "\n")
@@ -96,7 +97,8 @@ def get_detail_card_page(url, out_dir, save)
         print_file = "card_#{multiverseid}_print.html"
         print_dir = File.join(out_dir, 'print')
         if !Dir.exist?(print_dir)
-            Dir.mkdir(print_dir)
+            # Dir.mkdir(print_dir)
+            FileUtils.mkdir_p(print_dir)
         end
         print_path = File.join(print_dir, print_file)
         if File.exist?(print_path)
